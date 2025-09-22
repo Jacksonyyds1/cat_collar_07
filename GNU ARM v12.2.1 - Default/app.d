@@ -73,6 +73,8 @@ app.o: ../app.c \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\device\silabs\si91x\mcu\core\chip\inc/em_device.h \
  ../common.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/blinky.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/battery_monitor.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/lsm6dsv.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/spa06_003.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/bmm350.h \
@@ -202,6 +204,8 @@ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\comp
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\device\silabs\si91x\mcu\core\chip\inc/em_device.h:
 ../common.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/blinky.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/battery_monitor.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/lsm6dsv.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/spa06_003.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_driver/bmm350.h:

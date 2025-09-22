@@ -7,7 +7,7 @@
 #include "led_status_indicator.h"
 #include "blinky.h"
 #include "app_log.h"
-#include "sl_constants.h"
+#include "sl_status.h"
 #include "cmsis_os2.h"
 
 // LED pattern definitions for each status
@@ -33,11 +33,6 @@ static const led_pattern_step_t pattern_factory_reset[] = {
     {2000, 0, 1, 1}  // On for 2 seconds, then stop
 };
 
-static const led_pattern_step_t pattern_low_battery[] = {
-    // Breathing pattern: gradual on/off cycle
-    {50, 50, 0, 1},    // Quick flash to simulate breathing
-    {0, 1900, 1, 1}    // Long pause between breaths
-};
 
 static const led_pattern_step_t pattern_ota_update[] = {
     {200, 2800, 0, 1}  // Flash for 200ms every 3 seconds
@@ -48,9 +43,6 @@ static const led_pattern_step_t pattern_ota_fail[] = {
     {0, 2700, 1, 1}    // Pause, then repeat every 3 seconds
 };
 
-static const led_pattern_step_t pattern_charging[] = {
-    {0, 0, 0, 0}  // Special case: solid on
-};
 
 static const led_pattern_step_t pattern_off[] = {
     {0, 0, 0, 0}  // Special case: off
@@ -63,12 +55,9 @@ static const led_pattern_config_t led_patterns[LED_STATUS_MAX] = {
     [LED_STATUS_BLE_PAIR_SUCCESS] = {pattern_ble_pair_success, 1, true, 0},
     [LED_STATUS_BLE_PAIR_FAIL] = {pattern_ble_pair_fail, 3, false, 0},
     [LED_STATUS_FACTORY_RESET] = {pattern_factory_reset, 1, true, 0},
-    [LED_STATUS_LOW_BATTERY] = {pattern_low_battery, 2, false, 0},
     [LED_STATUS_OTA_UPDATE] = {pattern_ota_update, 1, false, 0},
     [LED_STATUS_OTA_SUCCESS] = {pattern_off, 1, true, 0},
     [LED_STATUS_OTA_FAIL] = {pattern_ota_fail, 2, false, 0},
-    [LED_STATUS_CHARGING] = {pattern_charging, 1, false, 0},
-    [LED_STATUS_CHARGE_COMPLETE] = {pattern_off, 1, true, 0},
     [LED_STATUS_OFF] = {pattern_off, 1, true, 0}
 };
 
@@ -144,10 +133,7 @@ sl_status_t led_status_set(led_status_t status)
     app_log_debug("LED status set to: %d\r\n", status);
 
     // Handle special cases
-    if (status == LED_STATUS_CHARGING) {
-        led_set_physical_state(true);
-        return SL_STATUS_OK;
-    } else if (status == LED_STATUS_OFF || status == LED_STATUS_OTA_SUCCESS || status == LED_STATUS_CHARGE_COMPLETE) {
+    if (status == LED_STATUS_OFF || status == LED_STATUS_OTA_SUCCESS) {
         led_set_physical_state(false);
         g_led_context.pattern_state = LED_PATTERN_STATE_COMPLETE;
         return SL_STATUS_OK;
@@ -210,7 +196,6 @@ static void led_start_next_step(void)
         }
     }
 
-    const led_pattern_step_t *step = &config->steps[g_led_context.current_step];
     g_led_context.current_flash = 0;
     g_led_context.step_start_time = osKernelGetTickCount();
 
@@ -235,7 +220,7 @@ static void led_process_current_step(void)
 
     if (step->on_time_ms == 0 && step->off_time_ms == 0) {
         // Special case: solid state
-        next_led_state = (g_led_context.current_status == LED_STATUS_CHARGING);
+        next_led_state = false;
         next_delay = 1000; // Check again in 1 second
     } else {
         // Normal flash pattern
@@ -302,20 +287,6 @@ void led_status_factory_reset(void)
     led_status_set(LED_STATUS_FACTORY_RESET);
 }
 
-void led_status_low_battery_warning(void)
-{
-    led_status_set(LED_STATUS_LOW_BATTERY);
-}
-
-void led_status_charging_started(void)
-{
-    led_status_set(LED_STATUS_CHARGING);
-}
-
-void led_status_charging_complete(void)
-{
-    led_status_set(LED_STATUS_CHARGE_COMPLETE);
-}
 
 void led_status_ota_update_start(void)
 {
@@ -332,9 +303,3 @@ void led_status_ota_update_failed(void)
     led_status_set(LED_STATUS_OTA_FAIL);
 }
 
-void led_status_stop_low_battery_warning(void)
-{
-    if (g_led_context.current_status == LED_STATUS_LOW_BATTERY) {
-        led_status_stop();
-    }
-}

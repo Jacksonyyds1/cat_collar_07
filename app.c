@@ -50,6 +50,8 @@
 #include "common_i2c.h"
 #include "common.h"
 #include "blinky.h"
+#include "led_status_indicator.h"
+#include "battery_monitor.h"
 #include "lsm6dsv.h"
 #include "spa06_003.h"
 #include "bmm350.h" 
@@ -311,6 +313,26 @@ LOG_HEAP_DELTA(2);
   platform_i2c_init(INSTANCE_TWO);
 LOG_HEAP_DELTA(3);
   leds_init();
+
+  // Initialize LED status indicator system
+  status = led_status_indicator_init();
+  if (status != SL_STATUS_OK) {
+    app_log_error("Failed to initialize LED status indicator: 0x%lx\r\n", status);
+  } else {
+    app_log_info("LED status indicator initialized\r\n");
+    // Show power-on indicator
+    led_status_power_on();
+  }
+
+  // Initialize battery monitor system
+  status = battery_monitor_init();
+  if (status != SL_STATUS_OK) {
+    app_log_error("Failed to initialize battery monitor: 0x%lx\r\n", status);
+  } else {
+    app_log_info("Battery monitor initialized\r\n");
+    // Start battery monitoring
+    battery_monitor_start();
+  }
 
   spi_flash_init();
   // spi_flash_format();    //格式化SPI Flash

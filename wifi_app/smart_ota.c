@@ -1,6 +1,7 @@
 #include "smart_ota.h"
 #include "version_manager.h"
 #include "wifi_ota_manager.h"
+#include "led_status_indicator.h"
 #include "app_log.h"
 #include "cmsis_os2.h"
 
@@ -60,6 +61,30 @@ static sl_status_t smart_ota_start_download_with_callbacks(wifi_ota_progress_cal
 static void smart_ota_update_status(smart_ota_status_t new_status, uint32_t progress)
 {
     current_status = new_status;
+
+    // Update LED status based on OTA status
+    switch (new_status) {
+        case SMART_OTA_DOWNLOADING:
+        case SMART_OTA_UPDATING:
+            led_status_ota_update_start();
+            app_log_info("OTA Update in progress - LED indicator active\r\n");
+            break;
+
+        case SMART_OTA_COMPLETE:
+            led_status_ota_update_success();
+            app_log_info("OTA Update completed successfully - LED off\r\n");
+            break;
+
+        case SMART_OTA_ERROR:
+            led_status_ota_update_failed();
+            app_log_info("OTA Update failed - LED fast flash indicator\r\n");
+            break;
+
+        default:
+            // No LED change for other states
+            break;
+    }
+
     if (status_callback) {
         status_callback(new_status, progress);
     }

@@ -21,6 +21,7 @@
 #include "ble_data_parse.h"
 #include "chekr_dash.h"
 #include "blinky.h"
+#include "led_status_indicator.h"
 #include "common.h"
 
 
@@ -318,13 +319,14 @@ int catcollar_bt_connection_get_state(void)
 void catcollar_bt_connection_set_state(catcollar_bt_connection_state_t state)
 {
   catcollar_bt_connection_state = state;
-  if (state == CATCOLLAR_BT_DISCONNECTED) {
-    leds_play(BLUE_LED, LEDS_SLOW_BLINK);
-  } else if (state == CATCOLLAR_BT_CONNECTED) {
-    leds_play(BLUE_LED, LEDS_ON);
-  } else {
-    app_log_error("Unknown connection state: %d\r\n", state);
-    leds_play(BLUE_LED, LEDS_OFF);
+
+  // Update LED status based on connection state
+  if (state == CATCOLLAR_BT_CONNECTED) {
+    app_log_info("BLE Connected - showing pairing success indicator\r\n");
+    led_status_ble_pairing_success();
+  } else if (state == CATCOLLAR_BT_DISCONNECTED) {
+    app_log_info("BLE Disconnected - entering pairing mode\r\n");
+    led_status_ble_enter_pairing();
   }
 }
 

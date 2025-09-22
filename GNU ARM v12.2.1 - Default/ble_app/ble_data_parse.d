@@ -31,7 +31,9 @@ ble_app/ble_data_parse.o: ../ble_app/ble_data_parse.c \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard/common.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\common\inc/sl_constants.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\common\inc/sl_additional_status.h \
- ../ble_app/ble_app_cat.h ../ble_app/chekr_dash.h \
+ ../ble_app/ble_app_cat.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h \
+ ../ble_app/chekr_dash.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_data_service/chekr_record.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_data_service/imu_service.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\device\silabs\si91x\wireless\ble\inc/rsi_bt_common_apis.h \
@@ -85,6 +87,7 @@ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard/common.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\common\inc/sl_constants.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\common\inc/sl_additional_status.h:
 ../ble_app/ble_app_cat.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h:
 ../ble_app/chekr_dash.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_data_service/chekr_record.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sensor_data_service/imu_service.h:

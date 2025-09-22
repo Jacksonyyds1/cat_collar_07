@@ -84,6 +84,9 @@ void leds_init(void);
 
 bool leds_play(leds_type led, LedPattern_t pNewPattern);
 
+// LED Status Indicator Integration
+void blinky_process_action(void);
+
 // ///test
 // extern bool toggle_timeout;
 

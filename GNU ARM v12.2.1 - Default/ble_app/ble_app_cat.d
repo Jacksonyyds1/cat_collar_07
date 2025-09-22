@@ -57,6 +57,7 @@ ble_app/ble_app_cat.o: ../ble_app/ble_app_cat.c \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\util\third_party\freertos\kernel\include/task.h \
  ../ble_app/chekr_dash.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/blinky.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard/common.h
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\device\silabs\si91x\wireless\ble\inc/rsi_ble_apis.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\device\silabs\si91x\wireless\ble\inc/rsi_bt_common.h:
@@ -117,4 +118,5 @@ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\uti
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\util\third_party\freertos\kernel\include/task.h:
 ../ble_app/chekr_dash.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/blinky.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\blinky/led_status_indicator.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard/common.h:

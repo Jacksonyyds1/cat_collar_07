@@ -8,6 +8,7 @@
 #include "app_log.h"
 #include "common.h"
 #include "ble_app_cat.h"
+#include "led_status_indicator.h"
 #include "chekr_dash.h"
 #include "chekr_record.h"
 #include "rsi_bt_common_apis.h"
@@ -456,7 +457,13 @@ static int factory_reset(char *data, int len)
 	resp.crc = utils_crc16_modbus((const uint8_t *)&resp, sizeof(resp) - sizeof(uint16_t));
 	write_to_central((uint8_t *)&resp, sizeof(resp));
 
+	// Show factory reset LED indicator
+	app_log_info("Factory reset requested - showing LED indicator\r\n");
+	led_status_factory_reset();
+
 	// TODO: what do we do for factory reset?
+	// Implement actual factory reset logic here...
+
 	return 0;
 }
 

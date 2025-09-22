@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "cmsis_os2.h"
+#include "sl_status.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,12 +25,9 @@ typedef enum {
     LED_STATUS_BLE_PAIR_SUCCESS,          // Blue solid for 2 seconds
     LED_STATUS_BLE_PAIR_FAIL,             // Blue double flash, pause 1s, double flash, continue
     LED_STATUS_FACTORY_RESET,             // Blue solid for 2 seconds
-    LED_STATUS_LOW_BATTERY,               // Blue breathing pattern
     LED_STATUS_OTA_UPDATE,                // Blue flash every 3 seconds
     LED_STATUS_OTA_SUCCESS,               // Blue off
     LED_STATUS_OTA_FAIL,                  // Blue fast flash every 3 seconds
-    LED_STATUS_CHARGING,                  // Blue solid during charging
-    LED_STATUS_CHARGE_COMPLETE,           // Blue off when fully charged
     LED_STATUS_OFF,                       // LED off
     LED_STATUS_MAX
 } led_status_t;
@@ -63,8 +61,8 @@ typedef struct {
     uint32_t step_start_time;
     uint32_t pattern_start_time;
     bool led_state;
-    osTimerHandle_t timer_handle;
-    osTimerHandle_t auto_stop_timer;
+    osTimerId_t timer_handle;
+    osTimerId_t auto_stop_timer;
 } led_status_context_t;
 
 // Function declarations
@@ -80,15 +78,10 @@ void led_status_ble_enter_pairing(void);
 void led_status_ble_pairing_success(void);
 void led_status_ble_pairing_failed(void);
 void led_status_factory_reset(void);
-void led_status_low_battery_warning(void);
-void led_status_charging_started(void);
-void led_status_charging_complete(void);
 void led_status_ota_update_start(void);
 void led_status_ota_update_success(void);
 void led_status_ota_update_failed(void);
 
-// Breathing pattern control
-void led_status_stop_low_battery_warning(void);
 
 #ifdef __cplusplus
 }
